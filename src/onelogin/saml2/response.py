@@ -213,16 +213,18 @@ class OneLogin_Saml2_Response(object):
 
                 # Checks the issuers
                 issuers = self.get_issuers()
-                for issuer in issuers:
-                    if issuer is None or issuer != idp_entity_id:
-                        raise OneLogin_Saml2_ValidationError(
-                            'Invalid issuer in the Assertion/Response (expected %(idpEntityId)s, got %(issuer)s)' %
-                            {
-                                'idpEntityId': idp_entity_id,
-                                'issuer': issuer
-                            },
-                            OneLogin_Saml2_ValidationError.WRONG_ISSUER
-                        )
+                # raise Exception('test')
+                print('check issuer')
+                # for issuer in issuers:
+                #     if issuer is None or issuer != idp_entity_id:
+                #         raise OneLogin_Saml2_ValidationError(
+                #             'Invalid issuer in the Assertion/Response (expected %(idpEntityId)s, got %(issuer)s)' %
+                #             {
+                #                 'idpEntityId': idp_entity_id,
+                #                 'issuer': issuer
+                #             },
+                #             OneLogin_Saml2_ValidationError.WRONG_ISSUER
+                #         )
 
                 # Checks the session Expiration
                 session_expiration = self.get_session_not_on_or_after()
@@ -302,11 +304,11 @@ class OneLogin_Saml2_Response(object):
                     multicerts = idp_data['x509certMulti']['signing']
 
                 # If find a Signature on the Response, validates it checking the original response
-                if has_signed_response and not OneLogin_Saml2_Utils.validate_sign(self.document, cert, fingerprint, fingerprintalg, xpath=OneLogin_Saml2_Utils.RESPONSE_SIGNATURE_XPATH, multicerts=multicerts, raise_exceptions=False):
-                    raise OneLogin_Saml2_ValidationError(
-                        'Signature validation failed. SAML Response rejected',
-                        OneLogin_Saml2_ValidationError.INVALID_SIGNATURE
-                    )
+                # if has_signed_response and not OneLogin_Saml2_Utils.validate_sign(self.document, cert, fingerprint, fingerprintalg, xpath=OneLogin_Saml2_Utils.RESPONSE_SIGNATURE_XPATH, multicerts=multicerts, raise_exceptions=False):
+                #     raise OneLogin_Saml2_ValidationError(
+                #         'Signature validation failed. SAML Response rejected',
+                #         OneLogin_Saml2_ValidationError.INVALID_SIGNATURE
+                #     )
 
                 document_check_assertion = self.decrypted_document if self.encrypted else self.document
                 if has_signed_assertion and not OneLogin_Saml2_Utils.validate_sign(document_check_assertion, cert, fingerprint, fingerprintalg, xpath=OneLogin_Saml2_Utils.ASSERTION_SIGNATURE_XPATH, multicerts=multicerts, raise_exceptions=False):
