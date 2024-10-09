@@ -135,7 +135,7 @@ class OneLogin_Saml2_Settings(object):
                 'Unsupported settings object',
                 OneLogin_Saml2_Error.UNSUPPORTED_SETTINGS_OBJECT
             )
-
+        security['requestedAuthnContext'] = False
         self.format_idp_cert()
         if 'x509certMulti' in self._idp:
             self.format_idp_cert_multi()
